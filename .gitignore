@@ -1,0 +1,92 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+logs
+*.log
+*.log.*
+*.out
+*.pid
+*.seed
+*.tgz
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build / Dist
+dist/
+build/
+out/
+tmp/
+temp/
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Env
+.env
+.env.test
+.env.production
+.env.development.local
+.env.local
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.swm
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# React Native / Expo
+.expo/
+.expo-shared/
+.expo-dev/
+.expo-web/
+web-build/
+android/
+ios/
+*.keystore
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro / React Native cache
+.metro/
+.cache/
+react-native-debugger.log
+
+# Xcode
+*.xcuserstate
+*.xcworkspace
+*.xcuserdata/
+DerivedData/
+
+# Android Studio
+.gradle/
+local.properties
+*.iml
+
+# Misc
+*.sublime-workspace
+*.sublime-project
