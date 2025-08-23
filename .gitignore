@@ -90,3 +90,58 @@ local.properties
 # Misc
 *.sublime-workspace
 *.sublime-project
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Expo
+.expo/
+.expo-shared/
+.expo-web/
+.expo-dev-cache/
+web-build/
+
+# Metro bundler
+*.packager
+*.tmp
+*.log
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/.idea/
+android/local.properties
+*.apk
+*.keystore
+
+# iOS
+ios/Pods/
+ios/build/
+ios/DerivedData/
+ios/*.xcodeproj/*.pbxuser
+ios/*.xcodeproj/project.xcworkspace/
+ios/*.xcworkspace/xcuserdata
+ios/*.xcworkspace/xcshareddata
+ios/*.xcodeproj/xcuserdata
+ios/*.xcodeproj/xcshareddata
+*.xcuserstate
+
+# VS Code
+.vscode/
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+jest-cache/

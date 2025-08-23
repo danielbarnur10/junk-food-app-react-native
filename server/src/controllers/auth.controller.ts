@@ -3,33 +3,29 @@ import { signToken, verifyToken } from '../utils/jwt';
 import User from '../models/UserModel';
 import { LoginRequestDTO, RegisterRequestDTO } from '../requests/authRequests';
 import { comparePassword, encryptPassword } from '../utils/hash';
+import authService from '../services/authService';
 
 
 const AuthController = {
-    me: async (req: Request, res: Response) => {
+    me: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const authorization = req.headers.authorization;
-            const isToken = authorization?.startsWith('Bearer');
-            if (!isToken) {
-                res.status(401).json({ message: "Auth.me No token was provided" })
+            if (!authorization) {
+                res.status(401).json({ message: "AuthController.me header.authorization is missing" })
                 return
             }
-            const token = authorization?.split(' ')[1] || '';
-
-            const isVerifiedToken = await verifyToken(token);
+            const isVerifiedToken = await authService.authenticateToken(authorization)
             if (isVerifiedToken) {
-
                 res.status(200).json({ message: "Auth.me user is authorized" })
             } else {
                 res.status(401).json({ message: "Auth.me user is unauthorized" })
             }
         }
         catch (error) {
-            res.status(401).json({ message: "Auth.me invalid token" });
-            console.log(error);
+            next(error);
         }
     },
-    register: async (req: RegisterRequestDTO, res: Response) => {
+    register: async (req: RegisterRequestDTO, res: Response, next: NextFunction) => {
         try {
 
             const { email, password, username } = req.body;
@@ -45,7 +41,7 @@ const AuthController = {
             console.log(newUser);
             res.status(201).json("Auth.register - user has been created succesfully")
         } catch (error) {
-            res.status(500).json("Auth.register - register failed")
+            next(error)
         }
     },
     login: async (req: LoginRequestDTO, res: Response, next: NextFunction) => {
@@ -75,9 +71,9 @@ const AuthController = {
             return next(error);
         }
     },
-    logout: async (req: Request, res: Response, next: NextFunction) => {
+    logout: async (_req: Request, res: Response, next: NextFunction) => {
         try {
-            res.status(200).json({ message: "Auth.logout Logout succfully" })
+            res.status(204).json({ message: "Auth.logout Logout succfully" })
         }
         catch (error) {
             next(error);
