@@ -3,8 +3,12 @@ import { api } from "./api.service";
 
 export const authService = {
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    const response = await api.post("/auth/login", credentials);
-    return response.data;
+    try {
+      const response = await api.post("/auth/login", credentials);
+      return response.data;
+    } catch (error) {
+      throw new Error(error as any);
+    }
   },
 
   async register(credentials: RegisterRequest): Promise<AuthResponse> {
