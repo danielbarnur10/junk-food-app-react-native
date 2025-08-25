@@ -5,9 +5,13 @@ import Product from "../models/ProductModel";
 const productController = {
     getAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const products = await Product.find();
-            console.log("get all : ",products)  
-            res.status(200).json({ message: "productController.getAll", data: { products }, success: true })
+            const products = await Product.find().lean();
+            console.log("get all : ", products)
+            res.status(200).json({
+                message: "productController.getAll",
+                data: products,
+                success: true
+            })
             return;
 
         } catch (error) {

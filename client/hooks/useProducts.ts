@@ -3,8 +3,6 @@ import { Product } from "@/types/product";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useProducts = () => {
-    console.log("data from product:")
-
   return useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: productService.getAll,

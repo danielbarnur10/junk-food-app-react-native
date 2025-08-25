@@ -6,11 +6,11 @@ export const productService = {
     const res = await api.get<{ success: boolean; data: Product[] }>(
       "/products"
     );
-    console.log("data from product: ",res)
     return res.data.data;
   },
 
   async create(product: ProductCreate): Promise<Product> {
+    console.log(product);
     const res = await api.post<{ success: boolean; data: Product }>(
       "/products",
       product

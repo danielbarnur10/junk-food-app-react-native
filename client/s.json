@@ -1,0 +1,57 @@
+{
+    "products": [
+        {
+            "__v": 0,
+            "_id": "68ac1932ef8e1add9e187468",
+            "createdAt": "2025-08-25T08:05:06.678Z",
+            "description": "A smooth and fast wireless mouse with Bluetooth.",
+            "image": "https://example.com/mouse.jpg",
+            "isAvailable": true,
+            "price": 120,
+            "title": "Wireless Mouse",
+            "updatedAt": "2025-08-25T08:05:06.678Z"
+        },
+        {
+            "__v": 0,
+            "_id": "68ac1f38d7c0933f0bb6d927",
+            "createdAt": "2025-08-25T08:30:48.575Z",
+            "description": "A smooth and fast wireless mouse with Bluetooth.",
+            "image": "https://example.com/mouse.jpg",
+            "isAvailable": true,
+            "price": 120,
+            "title": "Wireless Mouse",
+            "updatedAt": "2025-08-25T08:30:48.575Z"
+        },
+        {
+            "__v": 0,
+            "_id": "68ac204e83aafb044b8705a8",
+            "createdAt": "2025-08-25T08:35:26.483Z",
+            "description": "A smooth and fast wireless mouse with Bluetooth.",
+            "image": "https://example.com/mouse.jpg",
+            "isAvailable": true,
+            "price": 120,
+            "title": "Burger",
+            "updatedAt": "2025-08-25T08:35:26.483Z"
+        },
+        {
+            "__v": 0,
+            "_id": "68ac2379feb3e47cea36e503",
+            "createdAt": "2025-08-25T08:48:57.188Z",
+            "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fblog.swiggy.com%2Ffood%2Ftypes-of-burgers%2F&psig=AOvVaw0iCQK9mF85scLvmE64n8sG&ust=1756197749047000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjE6cjIpY8DFQAAAAAdAAAAABAZ",
+            "isAvailable": true,
+            "price": 2,
+            "title": "Dd",
+            "updatedAt": "2025-08-25T08:48:57.188Z"
+        },
+        {
+            "__v": 0,
+            "_id": "68ac35a4e23f90f0a2e9e7a3",
+            "createdAt": "2025-08-25T10:06:28.793Z",
+            "image": "Did.com",
+            "isAvailable": true,
+            "price": 123,
+            "title": "Dad",
+            "updatedAt": "2025-08-25T10:06:28.793Z"
+        }
+    ]
+}

@@ -18,10 +18,11 @@ import { ProductModal } from "@/components/modals/ProductModal";
 const { width } = Dimensions.get("window");
 
 export const ProductScreen = () => {
-  const { data: products = [], isLoading, isError, refetch } = useProducts();
+  const { data: products, isLoading, isError, refetch } = useProducts();
   const createProductMutation = useCreateProduct();
   const updateProductMutation = useUpdateProduct();
   const deleteProductMutation = useDeleteProduct();
+
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<"add" | "update">("add");
@@ -160,7 +161,6 @@ export const ProductScreen = () => {
           <Text style={styles.addButtonText}>Add Product</Text>
         </TouchableOpacity>
       </View>
-
       <FlatList
         data={products}
         renderItem={renderProductCard}
