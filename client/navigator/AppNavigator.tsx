@@ -5,8 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ProductScreen } from "@/screens/ProductScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { ProfileScreen } from "@/screens/ProfileScreen";
-import MenuPage from "@/Pages/MenuPage";
-import CartPage from "@/Pages/CartPage";
+import CartScreen from "@/screens/CartScreen";
 
 const Tab = createBottomTabNavigator<AppStackParamList>();
 
@@ -49,18 +48,10 @@ export const AppNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
-        name="Menu"
-        component={MenuPage}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return <Ionicons name="menu" size={24} color={focused ? "red" : "green"} />;
-          },
-        }}
-      />
+
       <Tab.Screen
         name="Cart"
-        component={CartPage}
+        component={CartScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return <Ionicons name="cart" size={24} color={focused ? "red" : "green"} />;

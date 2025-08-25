@@ -2,11 +2,13 @@ import { NextFunction, Router } from 'express';
 import authRouter from './authRoute'
 import userRouter from './userRoute'
 import productRouter from './productRoute'
+import orderRouter from './orderRoute'
 const router = Router();
 
 router.use('/auth', authRouter);
 router.use('/user', userRouter);
 router.use('/products', productRouter);
+router.use('/order', orderRouter);
 
 
 router.get('/health-check', (_req, res, next: NextFunction) => {

@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-  Image,
+  Image, Pressable,
   Dimensions,
 } from "react-native";
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from "@/hooks/useProducts";
 import { Ionicons } from "@expo/vector-icons";
 import { Product } from "@/types/product";
 import { ProductModal } from "@/components/modals/ProductModal";
+import { useAddOrder, useOrder } from "@/hooks/useOrders";
 
 const { width } = Dimensions.get("window");
 
@@ -27,6 +28,9 @@ export const ProductScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<"add" | "update">("add");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const { data: cart } = useOrder(); // for the badge (optional)
+  const addToCartMutation = useAddOrder();
 
   const handleAddProduct = async (productData: Omit<Product, "_id">) => {
     try {
@@ -95,6 +99,20 @@ export const ProductScreen = () => {
     setSelectedProduct(null);
   };
 
+  const handleAddToCart = (product: Product) => {
+    if (!product.isAvailable) {
+      Alert.alert("Not available", "This product is currently unavailable.");
+      return;
+    }
+    addToCartMutation.mutate(
+      { productId: product._id, qty: 1 },
+      {
+        onSuccess: () => Alert.alert("Added", `${product.title} added to cart`),
+        onError: (e: any) =>
+          Alert.alert("Error", e?.message ?? "Failed to add to cart"),
+      }
+    );
+  };
   const handleModalSubmit = (productData: Omit<Product, "_id">) => {
     if (modalMode === "add") {
       handleAddProduct(productData);
@@ -106,11 +124,15 @@ export const ProductScreen = () => {
 
   const renderProductCard = ({ item }: { item: Product }) => (
     <View style={styles.productCard}>
+      
       <Image source={{ uri: item.image }} style={styles.productImage} />
+      
       <View style={styles.productInfo}>
+        
         <Text style={styles.productTitle}>{item.title}</Text>
         <Text style={styles.productPrice}>${item.price}</Text>
         <View style={styles.availabilityContainer}>
+          
           <Ionicons
             name={item.isAvailable ? "checkmark-circle" : "close-circle"}
             size={16}
@@ -119,6 +141,7 @@ export const ProductScreen = () => {
           <Text style={[styles.availabilityText, { color: item.isAvailable ? "#4CAF50" : "#F44336" }]}>
             {item.isAvailable ? "Available" : "Not Available"}
           </Text>
+          
         </View>
       </View>
       <TouchableOpacity style={styles.updateButton} onPress={() => openUpdateModal(item)}>
@@ -127,7 +150,14 @@ export const ProductScreen = () => {
       <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteProduct(item._id)}>
         <Ionicons name="trash-outline" size={20} color="#F44336" />
       </TouchableOpacity>
+      <Pressable
+        style={styles.addToCartBtn}
+        onPress={() => handleAddToCart(item)}
+      >
+  <Ionicons name="cart-outline" size={20} color="#007AFF" />
+      </Pressable>
     </View>
+
   );
 
   if (isLoading) {
@@ -336,4 +366,17 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
   },
+  addToCartBtn: {
+  position: "absolute",
+  top: 160,
+  left: 135,
+  backgroundColor: "rgba(255,255,255,0.9)",
+  borderRadius: 20,
+  padding: 8,
+  elevation: 2,
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+},
 });
