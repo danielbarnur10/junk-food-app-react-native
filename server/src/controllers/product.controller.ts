@@ -6,7 +6,8 @@ const productController = {
     getAll: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const products = await Product.find();
-            res.status(204).json({ message: "productController.getAll", products, success: true })
+            console.log("get all : ",products)  
+            res.status(200).json({ message: "productController.getAll", data: { products }, success: true })
             return;
 
         } catch (error) {
@@ -17,7 +18,7 @@ const productController = {
     getProductbyId: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const product = await Product.findById(req.body.id);
-            res.status(204).json({ message: "productController.getProductbyId", product, success: true })
+            res.status(200).json({ message: "productController.getProductbyId", product, success: true })
             return;
         } catch (error) {
 
@@ -52,7 +53,7 @@ const productController = {
         try {
             const product = await Product.findOne(req.body.id);
             const deletedProduct = await product?.deleteOne();
-            res.status(204).json({ message: "productController.remove", product: deletedProduct, success: true })
+            res.status(200).json({ message: "productController.remove", product: deletedProduct, success: true })
             return;
 
         } catch (error) {

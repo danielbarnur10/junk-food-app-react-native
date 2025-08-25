@@ -6,6 +6,7 @@ export const productService = {
     const res = await api.get<{ success: boolean; data: Product[] }>(
       "/products"
     );
+    console.log("data from product: ",res)
     return res.data.data;
   },
 

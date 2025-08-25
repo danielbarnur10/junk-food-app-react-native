@@ -6,7 +6,7 @@ const router = Router();
 
 router.use('/auth', authRouter);
 router.use('/user', userRouter);
-router.use('/product', productRouter);
+router.use('/products', productRouter);
 
 
 router.get('/health-check', (_req, res, next: NextFunction) => {
