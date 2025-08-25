@@ -18,6 +18,6 @@ app.use('/api', routes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-    console.log(`listening on http://localhost:${PORT}`);
-    console.log(`Listening on http://localhost:${PORT}/api/health-check`);
+    console.log(`Listening on http://localhost:${PORT}`);
+    console.log(`Health check on http://localhost:${PORT}/api/health-check`);
 })

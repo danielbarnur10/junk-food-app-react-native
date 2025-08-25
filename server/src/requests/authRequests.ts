@@ -3,7 +3,7 @@ import { Request } from "express";
 export interface UserDTO {
   email: string;
   password: string;
-  username: string;
+  username?: string;
 }
 
 export interface RegisterRequestDTO extends Request {
