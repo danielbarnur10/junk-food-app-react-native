@@ -62,7 +62,6 @@ export default function CartScreen() {
       Alert.alert("Cart is empty", "Add some products first.");
       return;
     }
-    // לפי ה־hooks שלך, create לא מקבל פרמטרים (יוצר הזמנה מהעגלה בצד השרת)
     addOrder(undefined as any, {
       onSuccess: () => {
         Alert.alert("Success", "Order created!");
@@ -103,7 +102,10 @@ export default function CartScreen() {
           {!!totalQty && <Text style={styles.badge}>{totalQty}</Text>}
         </View>
         <Pressable
-          style={[styles.clearBtn, (clearing || totalQty === 0) && styles.btnDisabled]}
+          style={[
+            styles.clearBtn,
+            (clearing || totalQty === 0) && styles.btnDisabled,
+          ]}
           onPress={handleClear}
           disabled={clearing || totalQty === 0}
         >
@@ -129,9 +131,9 @@ export default function CartScreen() {
           renderItem={({ item }) => {
             const productId = item.product?._id ?? "";
             const title =
-              item.product?.title ?? (productId ? `#${productId.slice(-5)}` : "Product");
+              item.product?.title ??
+              (productId ? `#${productId.slice(-5)}` : "Product");
             const image = item.product?.image;
-            // authoritative unit price (what you snapshot at order time)
             const unitPrice = item.price ?? item.product?.price ?? 0;
             const qty = item.quantity ?? 0;
             const linePrice = unitPrice * qty;
@@ -188,14 +190,16 @@ export default function CartScreen() {
         />
       )}
 
-      {/* Footer summary */}
       <View style={styles.footer}>
         <View>
           <Text style={styles.totalLabel}>Total</Text>
           <Text style={styles.totalValue}>${totalPrice}</Text>
         </View>
         <Pressable
-          style={[styles.checkoutBtn, (disabled || totalQty === 0) && styles.btnDisabled]}
+          style={[
+            styles.checkoutBtn,
+            (disabled || totalQty === 0) && styles.btnDisabled,
+          ]}
           onPress={handleCheckout}
           disabled={disabled || totalQty === 0}
         >
@@ -210,7 +214,12 @@ export default function CartScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
-  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 16,
+  },
   muted: { color: "#7f8c8d", marginTop: 8 },
   errorTitle: { fontSize: 16, fontWeight: "700", marginVertical: 8 },
 
@@ -249,7 +258,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   clearText: { color: "#F44336", fontWeight: "600" },
-  emptyBox: { flex: 1, alignItems: "center", justifyContent: "center", padding: 24 },
+  emptyBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
 
   card: {
     borderRadius: 12,

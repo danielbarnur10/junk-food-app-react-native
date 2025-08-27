@@ -1,18 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { orderService } from "@/services/order.service";
 import { Order } from "@/types/orders";
 
-const ORDER_KEY = ["order"];
+const CART_KEY = ["cart"];
 
-export const useOrder = () =>
-  useQuery<Order>({
-    queryKey: ORDER_KEY,
-    queryFn: orderService.get,
+export function useCart() {
+  return useQuery<Order>({
+    queryKey: CART_KEY,
+    queryFn: () => orderService.get(),
+    retry: false,
   });
+}
 
 type AddVars = void | { productId?: string; qty?: number; quantity?: number };
 
-export const useAddOrder = () => {
+export function useAddToCartOrCheckout() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (vars?: AddVars) => {
@@ -32,11 +34,15 @@ export const useAddOrder = () => {
       }
       return orderService.finalize();
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ORDER_KEY }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   });
-};
+}
 
-export const useUpdateOrderItem = () => {
+export function useAddToCart() {
+  return useAddToCartOrCheckout();
+}
+
+export function useUpdateCartItem() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (vars: {
@@ -52,22 +58,23 @@ export const useUpdateOrderItem = () => {
           : 1;
       return orderService.updateItem(vars.productId, q);
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ORDER_KEY }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   });
-};
+}
 
-export const useRemoveOrderItem = () => {
+export function useRemoveFromCart() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (productId: string) => orderService.removeItem(productId),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ORDER_KEY }),
+    mutationFn: (vars: { productId: string }) =>
+      orderService.removeItem(vars.productId),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   });
-};
+}
 
-export const useClearOrder = () => {
+export function useClearCart() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () => orderService.clear(),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ORDER_KEY }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   });
-};
+}

@@ -1,14 +1,17 @@
-// src/config.ts
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 
+function normalizeBase(u?: string | null) {
+  if (!u) return null;
+  let s = u.trim();
+  while (s.endsWith("/")) s = s.slice(0, -1);
+  if (s.toLowerCase().endsWith("/api")) s = s.slice(0, -4);
+  return s;
+}
+
 function resolveDevBase(): string {
-  const env = process.env.EXPO_PUBLIC_API_BASE_URL;
-  if (env) {
-    const cleaned = env.replace(/\/+$/, "");
-    console.debug("[config] API from ENV:", cleaned);
-    return cleaned;
-  }
+  const env = normalizeBase(process.env.EXPO_PUBLIC_API_BASE_URL || null);
+  if (env) return `${env}/api`;
 
   const hostUri =
     (Constants as any)?.expoConfig?.hostUri ||
@@ -16,25 +19,16 @@ function resolveDevBase(): string {
     (Constants as any)?.manifest2?.extra?.expoClient?.hostUri;
 
   if (hostUri) {
-    const host = hostUri.split(":")[0];
-    const url = `http://${host}:5000`;
-    console.debug("[config] API from Expo hostUri:", url);
-    return url;
+    const host = String(hostUri).split(":")[0];
+    return `http://${host}:3001/api`;
   }
 
-  if (Platform.OS === "android") {
-    const url = "http://10.0.2.2:5000";
-    console.debug("[config] API fallback (Android emulator):", url);
-    return url;
-  }
-
-  const fallback = "http://172.16.0.29:5000";
-  console.debug("[config] API fallback (manual IP):", fallback);
-  return fallback;
+  if (Platform.OS === "android") return "http://10.0.2.2:3001/api";
+  return "http://192.168.1.100:3001/api";
 }
 
 const isDev = process.env.NODE_ENV === "development";
-
 export const API_URL = isDev
   ? resolveDevBase()
-  : "https://your-production-domain.com";
+  : (normalizeBase(process.env.EXPO_PUBLIC_API_BASE_URL || "") ||
+      "https://example.com") + "/api";

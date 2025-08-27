@@ -7,10 +7,16 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-  Image, Pressable,
+  Image,
+  Pressable,
   Dimensions,
 } from "react-native";
-import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from "@/hooks/useProducts";
+import {
+  useProducts,
+  useCreateProduct,
+  useUpdateProduct,
+  useDeleteProduct,
+} from "@/hooks/useProducts";
 import { Ionicons } from "@expo/vector-icons";
 import { Product } from "@/types/product";
 import { ProductModal } from "@/components/modals/ProductModal";
@@ -23,7 +29,6 @@ export const ProductScreen = () => {
   const createProductMutation = useCreateProduct();
   const updateProductMutation = useUpdateProduct();
   const deleteProductMutation = useDeleteProduct();
-
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<"add" | "update">("add");
@@ -124,40 +129,48 @@ export const ProductScreen = () => {
 
   const renderProductCard = ({ item }: { item: Product }) => (
     <View style={styles.productCard}>
-      
       <Image source={{ uri: item.image }} style={styles.productImage} />
-      
+
       <View style={styles.productInfo}>
-        
         <Text style={styles.productTitle}>{item.title}</Text>
         <Text style={styles.productPrice}>${item.price}</Text>
         <View style={styles.availabilityContainer}>
-          
           <Ionicons
             name={item.isAvailable ? "checkmark-circle" : "close-circle"}
             size={16}
             color={item.isAvailable ? "#4CAF50" : "#F44336"}
           />
-          <Text style={[styles.availabilityText, { color: item.isAvailable ? "#4CAF50" : "#F44336" }]}>
+          <Text
+            style={[
+              styles.availabilityText,
+              { color: item.isAvailable ? "#4CAF50" : "#F44336" },
+            ]}
+          >
             {item.isAvailable ? "Available" : "Not Available"}
           </Text>
-          
         </View>
       </View>
-      <TouchableOpacity style={styles.updateButton} onPress={() => openUpdateModal(item)}>
+      <TouchableOpacity
+        style={styles.updateButton}
+        onPress={() => openUpdateModal(item)}
+      >
         <Ionicons name="create-outline" size={20} color="#007AFF" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteProduct(item._id)}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleDeleteProduct(item._id)}
+      >
         <Ionicons name="trash-outline" size={20} color="#F44336" />
       </TouchableOpacity>
       <Pressable
         style={styles.addToCartBtn}
-        onPress={() => handleAddToCart(item)}
+        onPress={() =>
+          addToCartMutation.mutate({ productId: item._id, qty: 1 })
+        }
       >
-  <Ionicons name="cart-outline" size={20} color="#007AFF" />
+        <Ionicons name="cart-outline" size={20} color="#007AFF" />
       </Pressable>
     </View>
-
   );
 
   if (isLoading) {
@@ -174,7 +187,9 @@ export const ProductScreen = () => {
       <View style={styles.errorContainer}>
         <Ionicons name="alert-circle-outline" size={64} color="#F44336" />
         <Text style={styles.errorTitle}>Failed to load products</Text>
-        <Text style={styles.errorMessage}>Please check your connection and try again</Text>
+        <Text style={styles.errorMessage}>
+          Please check your connection and try again
+        </Text>
         <TouchableOpacity style={styles.retryButton} onPress={() => refetch()}>
           <Text style={styles.retryButtonText}>Retry</Text>
         </TouchableOpacity>
@@ -367,16 +382,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   addToCartBtn: {
-  position: "absolute",
-  top: 160,
-  left: 135,
-  backgroundColor: "rgba(255,255,255,0.9)",
-  borderRadius: 20,
-  padding: 8,
-  elevation: 2,
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.2,
-  shadowRadius: 2,
-},
+    position: "absolute",
+    top: 160,
+    left: 135,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 20,
+    padding: 8,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
 });
