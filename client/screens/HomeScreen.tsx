@@ -5,8 +5,12 @@ import { HomeScreenProps } from "@/types/navigation";
 export const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Burger Palace!</Text>
-      <Image source={require("@/assets/images/burgerLogo.png")} style={{ width: "auto", height: 400 }} />
+      <Text style={styles.title}>Welcome to Fast Food</Text>
+      <Text style={styles.title}>Restaurant!</Text>
+      <Image
+        source={require("@/assets/images/burgerLogo.png")}
+        style={{ width: "auto", height: 500 }}
+      />
     </View>
   );
 };
@@ -19,10 +23,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 32,
+    fontSize: 34,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 40,
     color: "#333",
   },
   userInfo: {
