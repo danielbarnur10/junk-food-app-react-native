@@ -2,11 +2,10 @@ import { Product } from "./product";
 
 export type OrderStatus = "pending" | "paid" | "shipped" | "cancelled";
 
-// When fetching orders from the server (populated with product info)
 export interface OrderItem {
-  product: Product;       // full product details
+  product: Product;
   quantity: number;
-  price: number;          // unit price (copied at order time, so price doesn't change later)
+  price: number;
 }
 
 export interface Order {
@@ -19,7 +18,6 @@ export interface Order {
   updatedAt: string;
 }
 
-// For creating new orders, you usually just send productId, qty, price
 export interface OrderCreateItem {
   productId: string;
   quantity: number;

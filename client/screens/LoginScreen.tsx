@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { useAuth } from "@/context/authContext";
 import { loginSchema, LoginFormData } from "@/schemas/auth.schema";
 import { LoginScreenProps } from "@/types/navigation";
@@ -38,25 +46,25 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
     setLoading(true);
     try {
       const result = await login(formData);
-      //console.log(result);
-      
+
       if (result.success) {
-        Alert.alert('Success', 'Login successful!');
+        Alert.alert("Success", "Login successful!");
       } else {
-        // Display the specific backend error message
-        Alert.alert('Error', result.error || 'Invalid credentials. Please try again.');
+        Alert.alert(
+          "Error",
+          result.error || "Invalid credentials. Please try again."
+        );
       }
     } catch (error: any) {
-      // Handle unexpected errors
-      let errorMessage = 'Something went wrong. Please try again.';
-      
+      let errorMessage = "Something went wrong. Please try again.";
+
       if (error?.response?.data?.message) {
         errorMessage = error.response.data.message;
       } else if (error?.message) {
         errorMessage = error.message;
       }
-      
-      Alert.alert('Error', errorMessage);
+
+      Alert.alert("Error", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -84,17 +92,24 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
           onChangeText={(text) => setFormData({ ...formData, password: text })}
           secureTextEntry
         />
-        {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        )}
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
           onPress={handleLogin}
           disabled={loading}
         >
-          <Text style={styles.buttonText}>{loading ? "Signing In..." : "Login"}</Text>
+          <Text style={styles.buttonText}>
+            {loading ? "Signing In..." : "Login"}
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate("Register")}>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => navigation.navigate("Register")}
+        >
           <Text style={styles.linkText}>Dont have an account? Register</Text>
         </TouchableOpacity>
       </View>

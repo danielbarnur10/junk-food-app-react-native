@@ -34,14 +34,13 @@ export const ProductScreen = () => {
   const [modalMode, setModalMode] = useState<"add" | "update">("add");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const { data: cart } = useOrder(); // for the badge (optional)
+  const { data: cart } = useOrder();
   const addToCartMutation = useAddOrder();
 
   const handleAddProduct = async (productData: Omit<Product, "_id">) => {
     try {
       await createProductMutation.mutateAsync(productData);
       Alert.alert("Success", "Product added successfully!");
-      refetch(); // Refresh the products list
     } catch (error) {
       Alert.alert("Error", "Failed to add product");
       console.log(error);
@@ -57,7 +56,7 @@ export const ProductScreen = () => {
         ...productData,
       });
       Alert.alert("Success", "Product updated successfully!");
-      refetch(); // Refresh the products list
+      refetch();
     } catch (error) {
       Alert.alert("Error", "Failed to update product");
       console.log(error);
@@ -77,7 +76,7 @@ export const ProductScreen = () => {
           try {
             await deleteProductMutation.mutateAsync(productId);
             Alert.alert("Success", "Product deleted successfully!");
-            refetch(); // Refresh the products list
+            refetch();
           } catch (error) {
             Alert.alert("Error", "Failed to delete product");
             console.log(error);
@@ -230,7 +229,7 @@ export const ProductScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 30,
     backgroundColor: "#F8F9FA",
   },
   header: {

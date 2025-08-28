@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { useAuth } from "@/context/authContext";
 import { registerSchema, RegisterFormData } from "@/schemas/auth.schema";
 import { RegisterScreenProps } from "@/types/navigation";
@@ -47,11 +55,12 @@ export const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
       if (result.success) {
         Alert.alert("Success", "Registration successful!");
       } else {
-        // Display the specific backend error message
-        Alert.alert("Error", result.error || "Registration failed. Please try again.");
+        Alert.alert(
+          "Error",
+          result.error || "Registration failed. Please try again."
+        );
       }
     } catch (error: any) {
-      // Handle unexpected errors
       let errorMessage = "Something went wrong. Please try again.";
 
       if (error?.response?.data?.message) {
@@ -78,7 +87,9 @@ export const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
           onChangeText={(text) => setFormData({ ...formData, username: text })}
           autoCapitalize="words"
         />
-        {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+        {errors.username && (
+          <Text style={styles.errorText}>{errors.username}</Text>
+        )}
 
         <TextInput
           style={[styles.input, errors.email && styles.inputError]}
@@ -97,26 +108,37 @@ export const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
           onChangeText={(text) => setFormData({ ...formData, password: text })}
           secureTextEntry
         />
-        {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        )}
 
         <TextInput
           style={[styles.input, errors.confirmPassword && styles.inputError]}
           placeholder="Confirm Password"
           value={formData.confirmPassword}
-          onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
+          onChangeText={(text) =>
+            setFormData({ ...formData, confirmPassword: text })
+          }
           secureTextEntry
         />
-        {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
+        {errors.confirmPassword && (
+          <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+        )}
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
           onPress={handleRegister}
           disabled={loading}
         >
-          <Text style={styles.buttonText}>{loading ? "Creating Account..." : "Register"}</Text>
+          <Text style={styles.buttonText}>
+            {loading ? "Creating Account..." : "Register"}
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => navigation.navigate("Login")}
+        >
           <Text style={styles.linkText}>Already have an account? Login</Text>
         </TouchableOpacity>
       </View>

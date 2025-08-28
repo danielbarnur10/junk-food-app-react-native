@@ -1,15 +1,25 @@
 import { LoginRequest, RegisterRequest } from "@/types/auth";
 import { User } from "@/types/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { authService } from "@/services/auth.service";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
-  login: (credentials: LoginRequest) => Promise<{ success: boolean; error?: string }>;
-  register: (credentials: RegisterRequest) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    credentials: LoginRequest
+  ) => Promise<{ success: boolean; error?: string }>;
+  register: (
+    credentials: RegisterRequest
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
 }
 
@@ -36,8 +46,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         AsyncStorage.getItem("user"),
       ]);
 
-      //console.log("here,", storedToken, storedUser);
-
       if (storedToken && storedUser) {
         const userData = JSON.parse(storedUser);
         setUser(userData);
@@ -49,7 +57,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const login = async (credentials: LoginRequest): Promise<{ success: boolean; error?: string }> => {
+  const login = async (
+    credentials: LoginRequest
+  ): Promise<{ success: boolean; error?: string }> => {
     try {
       const response = await authService.login(credentials);
 
@@ -69,7 +79,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return { success: false, error: response.message || "Login failed" };
     } catch (error: any) {
       console.error("Login error:", error);
-      // Extract error message from axios error response
       let errorMessage = "An unexpected error occurred";
       if (error?.response?.data?.message) {
         errorMessage = error.response.data.message;
@@ -80,7 +89,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const register = async (credentials: RegisterRequest): Promise<{ success: boolean; error?: string }> => {
+  const register = async (
+    credentials: RegisterRequest
+  ): Promise<{ success: boolean; error?: string }> => {
     try {
       const response = await authService.register(credentials);
 
@@ -96,10 +107,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return { success: true };
       }
 
-      return { success: false, error: response.message || "Registration failed" };
+      return {
+        success: false,
+        error: response.message || "Registration failed",
+      };
     } catch (error: any) {
       console.error("Registration error:", error);
-      // Extract error message from axios error response
       let errorMessage = "An unexpected error occurred";
       if (error?.response?.data?.message) {
         errorMessage = error.response.data.message;

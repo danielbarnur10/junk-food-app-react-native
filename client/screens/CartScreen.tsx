@@ -94,7 +94,6 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <Ionicons name="cart" size={22} />
@@ -114,7 +113,6 @@ export default function CartScreen() {
         </Pressable>
       </View>
 
-      {/* List */}
       {items.length === 0 ? (
         <View style={styles.emptyBox}>
           <Ionicons name="bag-outline" size={48} color="#999" />
@@ -213,7 +211,7 @@ export default function CartScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#fff", marginTop: 30 },
   center: {
     flex: 1,
     alignItems: "center",
